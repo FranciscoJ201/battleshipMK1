@@ -1,0 +1,75 @@
+### Code Explanation
+
+This program simulates an **AI Battleship player** that scans a board for hits (`2`) and empty spots (`0`). The AI does **not** modify the board—it only processes information based on the moves it selects.
+
+---
+
+## 1⃣ `CellState` (Enum)
+This **enumeration** represents the possible states of each cell on the game board:
+- `EMPTY (0)`: No ship present.
+- `MISS (1)`: A missed shot (not used in this version).
+- `HIT (2)`: A ship part that has been hit.
+
+---
+
+## 2⃣ `GameBoard` (Class)
+Represents the actual game board that the AI scans.
+
+### Methods:
+- `__init__(self, size=10, newBoard=None)`:  
+  - Initializes a `size x size` board.
+  - If `newBoard` is provided, it uses that grid; otherwise, it creates a blank one.
+
+- `mark_hit(self, row, col)`:  
+  - Marks a specific cell `(row, col)` as a `HIT (2)`.
+
+- `mark_miss(self, row, col)`:  
+  - Marks a specific cell `(row, col)` as a `MISS (1)`.
+
+- `is_valid_move(self, row, col)`:  
+  - Checks if a given `(row, col)` is **within the board boundaries**.
+  - Ensures that the move hasn’t been played before.
+
+- `all_hits_found(self)`:  
+  - Returns `True` if all ship positions have been hit, otherwise `False`.
+
+- `display_board(self)`:  
+  - Prints the board to the console for visualization.
+
+---
+
+## 3⃣ `AIPlayer` (Class)
+Simulates an AI that searches the game board for hits **without modifying it**.
+
+### Attributes:
+- `board`: The real game board that the AI scans.
+- `AIBoard`: The AI’s own memory board to track what it has learned.
+- `target_stack`: A **list of priority moves** (usually adjacent to previous hits).
+- `visited_moves`: A **set of moves** the AI has already checked.
+
+### Methods:
+#### ➤ `choose_move(self)` (In-depth explanation)  
+This method determines **where the AI should scan next**. It follows a two-step approach:
+
+1. **Priority Targeting (`target_stack`)**  
+   - If the AI has already found a hit, it checks **adjacent cells** (top, bottom, left, right).
+   - The AI **prioritizes** these adjacent spots before making a random guess.
+   - It ensures that moves in `target_stack` are valid and unvisited before selecting them.
+
+2. **Random Exploration**  
+   - If there are no prioritized targets, the AI **randomly selects** an unvisited cell.
+   - It ensures that the move is valid and hasn’t been checked before.
+
+This approach allows the AI to **efficiently search for ships** without cheating or modifying the board.
+
+---
+
+#### `update_with_hit(self, row, col)`
+- Marks `(row, col)` as a hit in AI's memory.
+- Adds adjacent cells to `target_stack` for future scanning.
+
+#### `update_with_miss(self, row, col)`
+- Marks `(row, col)` as a miss in AI's memory.
+- Ensures the AI does not revisit this spot.
+
+

@@ -1,0 +1,37 @@
+1. Board Representation
+2D array (list of lists)
+0 = Unchecked cell
+1 = Miss
+2 = Hit
+Alternative: Use an enum for clarity (EMPTY, MISS, HIT).
+
+
+
+2. Classes
+
+GameBoard (Manages board state)
+Attributes:
+grid (2D list) – Stores the game board
+size (int) – Board size (e.g., 10x10)
+Methods:
+mark_hit(row, col) – Marks a hit
+mark_miss(row, col) – Marks a miss
+is_valid_move(row, col) -> bool – Checks if a move is valid
+display_board() – Prints the board (for debugging)
+
+
+AIPlayer (Handles move selection)
+Attributes:
+board (GameBoard) – Reference to the game board
+target_stack (list of tuples) – Stores priority moves after a hit
+Methods:
+choose_move() -> (row, col) – Selects the best move
+update_with_hit(row, col) – Adds adjacent cells to target_stack
+update_with_miss(row, col) – Adjusts strategy after a miss
+
+
+
+3. Supporting Data Structures
+Stack (target_stack) – Prioritizes adjacent cells after a hit.
+Set (visited_moves) – Tracks previous moves to prevent duplicates.
+Dictionary (for ship tracking, optional) – Stores known hits and ship patterns
