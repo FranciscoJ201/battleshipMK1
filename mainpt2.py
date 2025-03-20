@@ -105,5 +105,5 @@ while not board.all_hits_found():
 
 print(f"AI solved the board in {moves} moves!")
 board.display_board()
-
+print("test")
 roboplayer.AIBoard.display_board()
