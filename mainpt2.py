@@ -5,6 +5,7 @@ class CellState(Enum):
     EMPTY = 0
     MISS = 1
     HIT = 2
+    SHIP = 3
 
 class GameBoard:
     def __init__(self, size=10, newBoard=None):
@@ -31,7 +32,7 @@ class GameBoard:
 class AIPlayer:
     def __init__(self, board):
         self.board = board  # The real game board
-        self.AIBoard = GameBoard(size=board.size)  # AI's own tracking board
+        self.AIBoard = GameBoard()  # AI's own tracking board
         self.target_stack = []
         self.visited_moves = set()
 
@@ -48,7 +49,8 @@ class AIPlayer:
 
     def update_with_hit(self, row, col):
         self.board.mark_hit(row, col)
-        self.AIBoard.mark_hit(row, col)  # Update AI's tracking board
+        # self.AIBoard.mark_hit(row, col)  # Update AI's tracking board
+        self.AIBoard.grid[row][col] = CellState.HIT  # Update AI's tracking board
         self.visited_moves.add((row, col))
 
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
@@ -64,16 +66,16 @@ class AIPlayer:
 
 # Initialize game board with random hits/misses
 preset_board = [
-    [2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+    [3, 3, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 2, 2, 0, 0, 0],
+    [0, 0, 0, 0, 3, 3, 3, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0]
 ]
 
 board = GameBoard(size=10, newBoard=[[CellState(cell) for cell in row] for row in preset_board])
@@ -83,19 +85,25 @@ print("Initial Board:")
 board.display_board()
 print("---")
 
+
 moves = 0
 while not board.all_hits_found():
     row, col = roboplayer.choose_move()
+    
     print(f"The RoboPlayer chooses {row},{col}")
+    
 
-    if board.grid[row][col] == CellState.HIT:
-        roboplayer.update_with_hit(row, col)
+    if board.grid[row][col] == CellState.SHIP:
         print("HIT!")
+        roboplayer.update_with_hit(row, col)
     else:
-        roboplayer.update_with_miss(row, col)
         print("MISS!")
+        roboplayer.update_with_miss(row, col)
+
     
     moves += 1
 
 print(f"AI solved the board in {moves} moves!")
 board.display_board()
+
+roboplayer.AIBoard.display_board()
