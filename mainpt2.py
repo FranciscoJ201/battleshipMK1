@@ -88,7 +88,7 @@ while not board.all_hits_found():
     row, col = roboplayer.choose_move()
     print(f"The RoboPlayer chooses {row},{col}")
 
-    if board.grid[row][col] == CellState.HIT:
+    if roboplayer.AIBoard.grid[row][col] == CellState.HIT:
         print("HIT!")
         roboplayer.update_with_hit(row, col)
     else:
