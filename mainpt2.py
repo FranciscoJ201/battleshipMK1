@@ -66,7 +66,7 @@ class AIPlayer:
 
 # Initialize game board with random hits/misses
 preset_board = [
-    [3, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+    [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -80,9 +80,10 @@ preset_board = [
 
 board = GameBoard(size=10, newBoard=[[CellState(cell) for cell in row] for row in preset_board])
 roboplayer = AIPlayer(board)
-
+ABoard = roboplayer.AIBoard
 print("Initial Board:")
 board.display_board()
+ABoard.display_board()
 print("---")
 
 
