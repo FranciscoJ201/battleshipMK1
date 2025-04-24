@@ -8,10 +8,10 @@ class CellState(Enum):
     SHIP = 3
 
 class GameBoard:
-    def __init__(self, size=10, newBoard=None):
+    def __init__(self, size=10):
         self.size = size
         self.grid = [[CellState.EMPTY for i in range(10)] for j in range(10)]
-        
+
         # another way to write the loop.
         # grid = []
         # for row_index in range(10):
