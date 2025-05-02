@@ -1,46 +1,8 @@
-from enum import Enum
+
+from Gameboard import GameBoard
 import random
 
-class CellState(Enum):
-    EMPTY = 0
-    MISS = 1
-    HIT = 2
-    SHIP = 3
 
-class GameBoard:
-    def __init__(self, size=10):
-        self.size = size
-        self.grid = [[CellState.EMPTY for i in range(10)] for j in range(10)]
-
-        # another way to write the loop.
-        # grid = []
-        # for row_index in range(10):
-        #     row = []
-        #     for col_index in range(10):
-        #         row.append(CellState.EMPTY)
-        #     grid.append(row)
-        # self.grid = grid
-        
-    def mark_hit(self, row, col):
-        self.grid[row][col] = CellState.HIT
-
-    def mark_miss(self, row, col):
-        self.grid[row][col] = CellState.MISS
-
-    def is_valid_move(self, row, col):
-        return 0 <= row < self.size and 0 <= col < self.size and self.grid[row][col] not in (CellState.MISS or CellState.HIT)
-    
-    def all_hits_found(self):
-        for row in range(len(self.grid)):
-            for col in range(len(self.grid)):
-                if(self.grid[row][col] != CellState.HIT):
-                    return False
-        return True
-    
-    def display(self):
-        for row in self.grid:
-            print(" ".join(str(cell.value) for cell in row))
-        print()
 
 class AIPlayer:
     def __init__(self, board):
