@@ -23,16 +23,25 @@ class GameBoard:
         
     def mark_hit(self, row, col):
         self.grid[row][col] = CellState.HIT
+
     def mark_miss(self, row, col):
         self.grid[row][col] = CellState.MISS
+
     def is_valid_move(self, row, col):
-        return 0 <= row < self.size and 0 <= col < self.size and self.grid[row][col] not in (CellState.MISS, CellState.HIT)
+        return 0 <= row < self.size and 0 <= col < self.size and self.grid[row][col] not in (CellState.MISS or CellState.HIT)
+    
     def all_hits_found(self):
-        return all(cell != CellState.EMPTY for row in self.grid for cell in row)
+        for row in range(len(self.grid)):
+            for col in range(len(self.grid)):
+                if(self.grid[row][col] != CellState.HIT):
+                    return False
+        return True
+    
     def display(self):
         for row in self.grid:
             print(" ".join(str(cell.value) for cell in row))
         print()
+
 class AIPlayer:
     def __init__(self, board):
         self.board = board  # The real game board
@@ -59,7 +68,9 @@ preset_board = [
     [0, 0, 0, 0, 3, 0, 0, 0, 0, 0]
 ]
 board = GameBoard()
-board.grid[0][0] = CellState.HIT
+# board.grid[0][1] = CellState.HIT
+# print(board.all_hits_found())
 board.display()
 
-    
+#row in range(len(self.grid))
+#col in range(len(self.grid))

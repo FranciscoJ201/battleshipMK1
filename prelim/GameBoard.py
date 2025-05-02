@@ -1,4 +1,4 @@
-from mainpt1 import CellState
+from olderVersion.mainpt1 import CellState
 import random
 class GameBoard:
     def __init__(self,size=10):
