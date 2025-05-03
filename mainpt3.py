@@ -1,38 +1,62 @@
-
 from Gameboard import GameBoard
+from AIPlayer import AIPlayer
 import random
+from boards import preset_board
+from boards import all_hit_board
+from boards import all_miss_board
 
+def generate_2d_list(rows, cols):
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
 
+    # Randomly determine how many 3s to place in the grid
+    num_threes = random.randint(1, rows * cols)  # Number of 3s will be at least 1
 
-class AIPlayer:
-    def __init__(self, board):
-        self.board = board  # The real game board
-        self.AIBoard = GameBoard()  # AI's own tracking board
-        self.target_stack = []
-        self.visited_moves = set()
-    def choose_move(self):
-       pass
-    def update_with_hit(self, row, col):
-       pass
-    def update_with_miss(self, row, col):
-       pass
-# Initialize game board with random hits/misses
-preset_board = [
-    [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 3, 3, 3, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 3, 0, 0, 0, 0, 0]
-]
+    for _ in range(num_threes):
+        row = random.randint(0, rows - 1)
+        col = random.randint(0, cols - 1)
+        grid[row][col] = 3
+
+    return grid
+
+# note FOR SHIPQUARES TO FUNCTION PROPERLY AND OTHER KEY COMPONENTS YOU MUST DISPLAY BOARD AT THE BEGINNING OF THE PROGRAM (IMMEDIATELY AFTER INSTANTIATION OF GAMEBOARD, nothing inbetween)
 board = GameBoard()
-# board.grid[0][1] = CellState.HIT
-# print(board.all_hits_found())
+board.grid = generate_2d_list(10,10)
 board.display()
+roboPlayer = AIPlayer(board)
+solution = 0
+while (not board.all_hits_found()):
+   solution = solution + 1
+   roboPlayer.choose_move()
 
-#row in range(len(self.grid))
-#col in range(len(self.grid))
+
+print(f"Solution took {solution} tries")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# allhits = GameBoard()
+# allmiss = GameBoard()
+
+# allhits.grid = all_hit_board
+# allmiss.grid = all_miss_board
+
+
+# allmiss.display()
+# allhits.display()
+
+# print(board.all_hits_found())
+# print(allmiss.all_hits_found())
+# print(allhits.all_hits_found())
