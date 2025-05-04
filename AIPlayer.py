@@ -6,7 +6,7 @@ import random
 class AIPlayer:
     def __init__(self,board):
         self.board = board  # The real game board
-        self.target_stack = [(0,0)]
+        self.target_stack = [(8,0)]
         self.visited_moves = set()
 
     def choose_move(self):
@@ -14,16 +14,21 @@ class AIPlayer:
         while len(self.target_stack) > 0:
             row,col = self.target_stack.pop()
             if (self.board.is_valid_move(row,col)) and ((row,col) not in self.visited_moves):
-                
                 return row, col
 
-        #old
-
+        
+        constRow = 3
         while True:
-            row, col = random.randint(0, self.board.size - 1), random.randint(0, self.board.size - 1)
+            # row, col = random.randint(0, self.board.size - 1), random.randint(0, self.board.size - 1)
+            #when it sinks a ship all the boxes around it become invalid (added to visited moves)
+            #in addition must add code that recognizes whole ship, and total number of ships (in board generator)
+
             if (self.board.is_valid_move(row,col)) and ((row,col) not in self.visited_moves):
+                row, col = row + 1, col + 1
+                return row, col
+            else:
                 
-                return row, col     
+                return row - constRow, col
 
 
 # board = GameBoard()
