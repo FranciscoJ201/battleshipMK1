@@ -1,0 +1,2 @@
+start at bottom left go diagonal, keep going diagonal again (two rows above), repeat whole board
+- only conditions it breaks this is if it gets a hit (prio targets around it) , or if it finishes pattern (randomly guess the spots between that are leftover)

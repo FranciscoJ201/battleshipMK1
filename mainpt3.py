@@ -23,19 +23,22 @@ board = GameBoard()
 board.grid = generate_2d_list(10,10)
 board.display()
 roboPlayer = AIPlayer(board)
-solution = 0
-print(board.is_valid_move(0,0))
-while (not board.all_hits_found()):
-   print()
-   print(roboPlayer.visited_moves)
+
+
+
+# solution = 0
+# print(board.is_valid_move(0,0))
+# while (not board.all_hits_found()):
+#    print()
+#    print(roboPlayer.visited_moves)
    # board.display()
-   solution = solution + 1
-   roboPlayer.choose_move()
+#    solution = solution + 1
+#    roboPlayer.choose_move()
    # if solution > 10: 
    #    break
    
 
-print(f"Solution took {solution} tries")
+# print(f"Solution took {solution} tries")
     
 
 
