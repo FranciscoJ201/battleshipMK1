@@ -20,7 +20,7 @@ def generate_2d_list(rows, cols):
 
 # note FOR SHIPQUARES TO FUNCTION PROPERLY AND OTHER KEY COMPONENTS YOU MUST DISPLAY BOARD AT THE BEGINNING OF THE PROGRAM (IMMEDIATELY AFTER INSTANTIATION OF GAMEBOARD, nothing inbetween)
 board = GameBoard()
-board.grid = generate_2d_list(10,10)
+board.grid = preset_board
 board.display()
 roboPlayer = AIPlayer(board)
 
@@ -28,14 +28,26 @@ roboPlayer = AIPlayer(board)
 
 # solution = 0
 # print(board.is_valid_move(0,0))
-# while (not board.all_hits_found()):
-#    print()
-#    print(roboPlayer.visited_moves)
-   # board.display()
-#    solution = solution + 1
-#    roboPlayer.choose_move()
-   # if solution > 10: 
-   #    break
+while (not board.all_hits_found()):
+    row,col=roboPlayer.choose_move()
+    board.grid[row][col]=2
+board.display()
+
+# board = GameBoard()
+# board.grid = [[0 for _ in range(10)] for _ in range(10)]
+# board.display()
+# AI = AIPlayer(board)
+# n = 0
+# while not board.all_hits_found():
+    
+#     row,col=AI.choose_move()
+#     board.grid[row][col]=2
+#     n+=1
+    
+# board.display()
+# print(board.all_hits_found())
+# print(board.all_hits_found())
+                          
    
 
 # print(f"Solution took {solution} tries")

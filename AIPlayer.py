@@ -6,54 +6,82 @@ import random
 class AIPlayer:
     def __init__(self,board):
         self.board = board  # The real game board
-        self.target_stack = [(8,0)]
         self.visited_moves = set()
+        self.left_over = [] 
+        self.last_move = (0,0) #configures left over pieces after algorithim
+        self.phase = 1
+        self.initial = 8
+        self.iterate = 0
+        for row in range(len(self.board.grid)):
+            for col in range(len(self.board.grid[0])):
+                if row%2 == 0 and col%2!=0:
+                    self.left_over.append((row,col))
+                elif row%2!=0 and col%2==0: 
+                    self.left_over.append((row,col))
 
     def choose_move(self):
         #MAKE IT SO THAT IT ADDS TO TARGET STACK
-        while len(self.target_stack) > 0:
-            row,col = self.target_stack.pop()
-            if (self.board.is_valid_move(row,col)) and ((row,col) not in self.visited_moves):
-                return row, col
+        if ((8,0) not in self.visited_moves):
+            #first move in algoritihm is 8,0
+            self.visited_moves.add((8,0))
+            self.last_move = (8,0)
+            return (8,0)
+        
+        
+        if (self.last_move == (1,9)):
+            #final move in algorithim is 1,9
+            #this changes phase to 2 so that it knows algoritihm is done
+            self.phase = 3
+        if(self.last_move ==(9,9)):
+            #second part of algoritihm
+            self.phase = 2
+            self.iterate = 9
+            self.initial = 9
+         
+        #MAKE SURE IT IS EQUAL TO CELLSTATE.HIT.VALUE
+        if (self.board.grid[self.last_move[0]][self.last_move[1]] == CellState.HIT.value):
+            
+            pass # if the grid[lastmove]= HIT: prio move
 
-        row = 8 
-        col = 0
-        initial = 8
-        iterate = 0
-        done = False
-        while not done:
-            if row<10 and col < 10:
-                self.target_stack.append((row,col))
+        elif(self.phase == 1):
+            row,col = self.last_move
+            
+            if (row>=0 and row<9) and (col>=0 and col<9):
                 col += 1
                 row += 1
             else:
-                iterate+=2
-                row= initial-iterate 
+                self.iterate+=2
+                row= self.initial-self.iterate 
                 col=0 
-                self.target_stack.append((row,col))
-            if row == 2 and col == 10:
-                done = True
+        elif(self.phase ==2):
+            row,col = self.last_move
+            if (row>=0 and row<9) and (col>=0 and col<9):
+                col += 1
+                row += 1
+            else:
+                self.iterate-=2
+                row= 0
+                col= self.initial-self.iterate 
+        elif(self.phase==3):
+            random_point = random.choice(self.left_over)
+            self.left_over.remove(random_point)#shortens list so that it cannot possily do same move
+            row,col = random_point
+
+        #code that should be done regardless of move type
+        self.last_move = row,col
+        self.visited_moves.add((row,col))
+        print(f"Moved to: {self.last_move}")
+        # print(f"visited moves: {self.visited_moves}")
+        return row, col
+        
+        
+        
+    
+      
+        
+          
 
 
-# row, col = random.randint(0, self.board.size - 1), random.randint(0, self.board.size - 1)
 #when it sinks a ship all the boxes around it become invalid (added to visited moves)
 #in addition must add code that recognizes whole ship, and total number of ships (in board generator)
 
-board = GameBoard()
-board.grid = preset_board
-board.display()
-AI = AIPlayer(board)
-# print(AI.choose_move())
-# print(len(AI.target_stack))
-n=0
-while n<30:
-    print(AI.choose_move())
-    n+=1
-
-
-    #    for i, row in enumerate(self.board.grid):
-    #             for j, val in enumerate(row):
-    #                 if self.board.grid[i][j] != CellState.HIT:
-    #                     self.board.grid[i][j] = CellState.HIT
-                        
-                        
