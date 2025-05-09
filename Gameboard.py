@@ -1,10 +1,10 @@
 from Cellstate import CellState
 class GameBoard:
-    def __init__(self, size=10):
+    def __init__(self, size=10,grid=None):
         self.size = size
-        self.grid = self.createGrid()
-        self.shipsqaures = 0
+        self.shipsquares = 0
         self.ships = 0
+        self.grid = self.createGrid(grid)
     def mark_hit(self, row, col):
         self.grid[row][col] = CellState.HIT.value
 
@@ -34,11 +34,12 @@ class GameBoard:
                 row_string += str(col) + ' '
             print(row_string.strip())  #whitespace at end gets removed
     def createGrid(self,grid=None):
+        print("works")
         if grid:
+            self.grid = grid
             for row in range(len(self.grid)):
-                for col in range(len(self.grid)):
-                    if(self.grid[row][col] == CellState.HIT.value):
-                        self.shipsquares +=1
-                    
-
-        return[[CellState.EMPTY.value for i in range(10)] for j in range(10)] #defaults at 10 by 10 of 0s
+                for col in range(len(self.grid[row])):
+                    if self.grid[row][col] == CellState.SHIP.value:
+                        self.shipsquares += 1
+            return self.grid
+        return [[CellState.EMPTY.value for _ in range(10)] for _ in range(10)]

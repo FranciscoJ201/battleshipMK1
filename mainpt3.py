@@ -19,12 +19,12 @@ def generate_2d_list(rows, cols):
     return grid
 
 # note FOR SHIPQUARES TO FUNCTION PROPERLY AND OTHER KEY COMPONENTS YOU MUST DISPLAY BOARD AT THE BEGINNING OF THE PROGRAM (IMMEDIATELY AFTER INSTANTIATION OF GAMEBOARD, nothing inbetween)
-board = GameBoard()
-board.grid = preset_board
+board = GameBoard(grid=preset_board)
+# board.createGrid(preset_board)
 board.display()
 roboPlayer = AIPlayer(board)
 print(board.ships)
-print(board.shipsqaures)
+print(board.shipsquares)
 
 
 # solution = 0
