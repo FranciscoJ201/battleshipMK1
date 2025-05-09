@@ -2,8 +2,9 @@ from Cellstate import CellState
 class GameBoard:
     def __init__(self, size=10):
         self.size = size
-        self.grid = [[CellState.EMPTY.value for i in range(10)] for j in range(10)] #defaults at 10 by 10 of 0s
+        self.grid = self.createGrid()
         self.shipsqaures = 0
+        self.ships = 0
     def mark_hit(self, row, col):
         self.grid[row][col] = CellState.HIT.value
 
@@ -17,9 +18,6 @@ class GameBoard:
                     return True
         return False
     
-
-        
-    
     def all_hits_found(self):
         
         # for row in self.grid:
@@ -30,24 +28,17 @@ class GameBoard:
         return True
     
     def display(self):
-        #count ship squares & check what type of board [Cells or ints] and convert
-        # if isinstance(self.grid[0][0], int):
-        #     for row in range(len(self.grid)):
-        #         for col in range(len(self.grid)):
-        #             if self.grid[row][col] == 3:
-        #                 self.shipsqaures +=1
-        #             self.grid[row][col] = CellState(self.grid[row][col])
-
-        # for row in self.grid:
-        #     row_string = ''
-        #     for col in row:
-        #         row_string += str(col) + ' '
-        #     print(row_string.strip())
-
         for row in self.grid:
             row_string = ''
             for col in row:
                 row_string += str(col) + ' '
             print(row_string.strip())  #whitespace at end gets removed
+    def createGrid(self,grid=None):
+        if grid:
+            for row in range(len(self.grid)):
+                for col in range(len(self.grid)):
+                    if(self.grid[row][col] == CellState.HIT.value):
+                        self.shipsquares +=1
+                    
 
-        
+        return[[CellState.EMPTY.value for i in range(10)] for j in range(10)] #defaults at 10 by 10 of 0s

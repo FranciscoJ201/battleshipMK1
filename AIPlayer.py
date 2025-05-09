@@ -39,7 +39,7 @@ class AIPlayer:
             self.initial = 9
          
         #MAKE SURE IT IS EQUAL TO CELLSTATE.HIT.VALUE
-        if (self.board.grid[self.last_move[0]][self.last_move[1]] == CellState.HIT.value):
+        if (self.board.grid[self.last_move[0]][self.last_move[1]] == CellState.MISS.value):
             
             pass # if the grid[lastmove]= HIT: prio move
 

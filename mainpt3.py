@@ -23,15 +23,18 @@ board = GameBoard()
 board.grid = preset_board
 board.display()
 roboPlayer = AIPlayer(board)
-
+print(board.ships)
+print(board.shipsqaures)
 
 
 # solution = 0
 # print(board.is_valid_move(0,0))
-while (not board.all_hits_found()):
-    row,col=roboPlayer.choose_move()
-    board.grid[row][col]=2
-board.display()
+
+
+# while (not board.all_hits_found()):
+#     row,col=roboPlayer.choose_move()
+#     board.grid[row][col]=2
+# board.display()
 
 # board = GameBoard()
 # board.grid = [[0 for _ in range(10)] for _ in range(10)]
