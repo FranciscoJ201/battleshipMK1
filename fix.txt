@@ -1,0 +1,3 @@
+in AIPlayer make it so that it stores a previous spot before a hit so that it goes back on track of the algorithim and doesnt go to negative values
+
+

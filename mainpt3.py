@@ -4,6 +4,7 @@ import random
 from boards import preset_board
 from boards import all_hit_board
 from boards import all_miss_board
+from Cellstate import CellState 
 
 def generate_2d_list(rows, cols):
     grid = [[0 for _ in range(cols)] for _ in range(rows)]
@@ -31,10 +32,16 @@ print(board.shipsquares)
 # print(board.is_valid_move(0,0))
 
 
-# while (not board.all_hits_found()):
-#     row,col=roboPlayer.choose_move()
-#     board.grid[row][col]=2
-# board.display()
+while (not board.all_hits_found()):
+    
+    row,col = roboPlayer.choose_move()
+    if(board.grid[row][col]==CellState.SHIP.value):
+        board.mark_hit(row,col)
+    else:
+        board.mark_miss(row,col)
+    board.display()
+    print(board.shipsquares)
+board.display()
 
 # board = GameBoard()
 # board.grid = [[0 for _ in range(10)] for _ in range(10)]

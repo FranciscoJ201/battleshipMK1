@@ -7,10 +7,10 @@ class GameBoard:
         self.grid = self.createGrid(grid)
     def mark_hit(self, row, col):
         self.grid[row][col] = CellState.HIT.value
-
+        self.shipsquares = self.shipsquares - 1
     def mark_miss(self, row, col):
         self.grid[row][col] = CellState.MISS.value 
-
+        
     def is_valid_move(self, row, col):
         for row in range(len(self.grid)):
             for col in range(len(self.grid)):
@@ -20,12 +20,16 @@ class GameBoard:
     
     def all_hits_found(self):
         
-        # for row in self.grid:
-        for row in range(len(self.grid)):
-            for col in range(len(self.grid)):
-                if(self.grid[row][col] != CellState.HIT.value):
-                    return False
-        return True
+      
+        # for row in range(len(self.grid)):
+        #     for col in range(len(self.grid)):
+        #         if(self.grid[row][col] != CellState.HIT.value):
+        #             return False
+                
+        # # if (self.shipsquares==0): 
+        # #     return True
+        # return True
+        return self.shipsquares == 0
     
     def display(self):
         for row in self.grid:
@@ -33,8 +37,9 @@ class GameBoard:
             for col in row:
                 row_string += str(col) + ' '
             print(row_string.strip())  #whitespace at end gets removed
+
     def createGrid(self,grid=None):
-        print("works")
+        
         if grid:
             self.grid = grid
             for row in range(len(self.grid)):
