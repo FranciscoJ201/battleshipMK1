@@ -12,6 +12,12 @@ class AIPlayer:
         self.phase = 1 
         self.initial = 8
         self.iterate = 0
+        self.target_mode = False
+        self.targets = []
+        self.saved_move = None
+        self.saved_iterate = None
+        self.saved_phase = None
+        self.saved_initial = None
         
         
         #MAKE SURE TO REMOVE HITS FROM LEFT OVER ARRAY
@@ -40,22 +46,46 @@ class AIPlayer:
             self.phase = 2
             self.iterate = 9
             self.initial = 9
-         
+
+        if self.target_mode and len(self.targets) > 0:
+            row, col = self.targets.pop(0)
+            while (row, col) in self.visited_moves and len(self.targets)>0:
+                row, col = self.targets.pop(0)
+            if (row, col) not in self.visited_moves:
+                self.visited_moves.add((row,col))
+                self.last_move = (row, col)
+                return row,col
+            else:
+                self.target_mode = False
+                if self.saved_move: #if there is a saved move
+                    self.last_move = self.saved_move
+                    self.iterate = self.saved_iterate
+                    self.phase = self.saved_phase
+                    self.initial = self.saved_initial
+                    self.saved_iterate = None
+                    self.saved_move = None
+                    self.saved_phase = None
+                    self.saved_initial = None
+
+
+
         #MAKE SURE IT IS EQUAL TO CELLSTATE.HIT.VALUE
         if (self.board.grid[self.last_move[0]][self.last_move[1]] == CellState.HIT.value):
-            neighbors = [
+            if not self.target_mode:
+                self.saved_move = self.last_move
+                self.saved_iterate = self.iterate
+                self.saved_phase = self.phase
+                self.saved_initial = self.initial
+            self.target_mode = True 
+            self.targets = [
             (self.last_move[0]-1, self.last_move[1]),  # Up
             (self.last_move[0]+1, self.last_move[1]),  # Down
             (self.last_move[0], self.last_move[1]-1),  # Left
             (self.last_move[0], self.last_move[1]+1)   # Right
             ]
-            for row, col in neighbors:
-                if (0 <= row < len(self.board.grid)) and (0 <= col < len(self.board.grid[0])):
-                    if (row, col) not in self.visited_moves:
-                        self.visited_moves.add((row, col))
-                        self.last_move = (row, col)
-                        print(f"Moved to: {self.last_move} (prioritized after hit)")
-                        return (row, col)
+
+            return self.choose_move() #DO THIS SO AS LONG AS ITS IN TARGET MODE
+        
             # pass # if the grid[lastmove]= HIT: prio move
 
         elif(self.phase == 1):
@@ -65,9 +95,18 @@ class AIPlayer:
                 col += 1
                 row += 1
             else:
-                self.iterate+=2
-                row= self.initial-self.iterate 
-                col=0 
+                self.iterate += 2
+                if self.iterate > self.initial:
+                    # phase 1 done
+                    self.phase = 2
+                    self.iterate = 9
+                    self.initial = 9
+                    row = 0
+                    col = 0
+                else:
+                    row = self.initial - self.iterate 
+                    col = 0
+
         elif(self.phase ==2):
             row,col = self.last_move
             if (row>=0 and row<9) and (col>=0 and col<9):

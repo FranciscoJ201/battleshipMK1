@@ -28,19 +28,21 @@ print(board.ships)
 print(board.shipsquares)
 
 
-# solution = 0
+solution = 0
 # print(board.is_valid_move(0,0))
 
 
 while (not board.all_hits_found()):
-    
+    solution +=1
     row,col = roboPlayer.choose_move()
     if(board.grid[row][col]==CellState.SHIP.value):
         board.mark_hit(row,col)
     else:
         board.mark_miss(row,col)
     board.display()
-    print(board.shipsquares)
+    print()
+    
+print(solution)
 board.display()
 
 # board = GameBoard()
