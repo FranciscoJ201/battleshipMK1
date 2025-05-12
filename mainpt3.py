@@ -37,6 +37,7 @@ while (not board.all_hits_found()):
     solution +=1
     print()
 print(solution)
+print("help")
    
     
 

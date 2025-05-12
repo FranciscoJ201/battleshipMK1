@@ -123,4 +123,4 @@ class AIPlayer:
       
 #when it sinks a ship all the boxes around it become invalid (added to visited moves)
 #in addition must add code that recognizes whole ship, and total number of ships (in board generator)
-
+#new stuff
