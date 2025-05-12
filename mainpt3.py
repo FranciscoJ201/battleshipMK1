@@ -19,75 +19,24 @@ def generate_2d_list(rows, cols):
 
     return grid
 
-# note FOR SHIPQUARES TO FUNCTION PROPERLY AND OTHER KEY COMPONENTS YOU MUST DISPLAY BOARD AT THE BEGINNING OF THE PROGRAM (IMMEDIATELY AFTER INSTANTIATION OF GAMEBOARD, nothing inbetween)
 board = GameBoard(grid=preset_board)
-# board.createGrid(preset_board)
-board.display()
+board= GameBoard()
 roboPlayer = AIPlayer(board)
-print(board.ships)
-print(board.shipsquares)
 
 
-# solution = 0
-# print(board.is_valid_move(0,0))
-
-
+solution = 0
 while (not board.all_hits_found()):
-    
+    board.display()
     row,col = roboPlayer.choose_move()
+    # print(roboPlayer.save_move)
+    # print(roboPlayer.target_mode)
     if(board.grid[row][col]==CellState.SHIP.value):
         board.mark_hit(row,col)
     else:
         board.mark_miss(row,col)
-    board.display()
-    print(board.shipsquares)
-board.display()
-
-# board = GameBoard()
-# board.grid = [[0 for _ in range(10)] for _ in range(10)]
-# board.display()
-# AI = AIPlayer(board)
-# n = 0
-# while not board.all_hits_found():
-    
-#     row,col=AI.choose_move()
-#     board.grid[row][col]=2
-#     n+=1
-    
-# board.display()
-# print(board.all_hits_found())
-# print(board.all_hits_found())
-                          
+    solution +=1
+    print()
+print(solution)
    
-
-# print(f"Solution took {solution} tries")
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# allhits = GameBoard()
-# allmiss = GameBoard()
-
-# allhits.grid = all_hit_board
-# allmiss.grid = all_miss_board
-
-
-# allmiss.display()
-# allhits.display()
-
-# print(board.all_hits_found())
-# print(allmiss.all_hits_found())
-# print(allhits.all_hits_found())

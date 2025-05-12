@@ -12,11 +12,7 @@ class GameBoard:
         self.grid[row][col] = CellState.MISS.value 
         
     def is_valid_move(self, row, col):
-        for row in range(len(self.grid)):
-            for col in range(len(self.grid)):
-                if (0<=row<10) and (0<=col<10) and (self.grid[row][col] in (CellState.EMPTY.value,CellState.SHIP.value)): #need this weird comparison for enumerate stuff
-                    return True
-        return False
+        pass
     
     def all_hits_found(self):
         
