@@ -12,12 +12,9 @@ class AIPlayer:
         self.phase = 1 
         self.initial = 8
         self.iterate = 0
+        self.neighbors = []
+        self.save_move = None
         self.target_mode = False
-        self.targets = []
-        self.saved_move = None
-        self.saved_iterate = None
-        self.saved_phase = None
-        self.saved_initial = None
         
         
         #MAKE SURE TO REMOVE HITS FROM LEFT OVER ARRAY
@@ -41,55 +38,50 @@ class AIPlayer:
             #final move in algorithim is 1,9
             #this changes phase to 2 so that it knows algoritihm is done
             self.phase = 3
-        if(self.last_move ==(9,9)):
-            #second part of algoritihm
-            self.phase = 2
-            self.iterate = 9
-            self.initial = 9
 
-        if self.target_mode and len(self.targets) > 0:
-            row, col = self.targets.pop(0)
-            while (row, col) in self.visited_moves and len(self.targets)>0:
-                row, col = self.targets.pop(0)
+        if self.target_mode and len(self.neighbors)>0:
+            row, col = self.neighbors.pop(0)
+            while (row, col) in self.visited_moves and len(self.neighbors)>0:
+                row, col = self.neighbors.pop(0)
             if (row, col) not in self.visited_moves:
                 self.visited_moves.add((row,col))
                 self.last_move = (row, col)
+                print(f"Moved to: {self.last_move}") 
+                print(self.neighbors)
                 return row,col
-            else:
-                self.target_mode = False
-                if self.saved_move: #if there is a saved move
-                    self.last_move = self.saved_move
-                    self.iterate = self.saved_iterate
-                    self.phase = self.saved_phase
-                    self.initial = self.saved_initial
-                    self.saved_iterate = None
-                    self.saved_move = None
-                    self.saved_phase = None
-                    self.saved_initial = None
+        else:
+            self.target_mode = False
 
-
-
-        #MAKE SURE IT IS EQUAL TO CELLSTATE.HIT.VALUE
         if (self.board.grid[self.last_move[0]][self.last_move[1]] == CellState.HIT.value):
             if not self.target_mode:
-                self.saved_move = self.last_move
-                self.saved_iterate = self.iterate
-                self.saved_phase = self.phase
-                self.saved_initial = self.initial
-            self.target_mode = True 
-            self.targets = [
+                self.save_move = self.last_move
+            self.target_mode = True
+            self.neighbors = [
             (self.last_move[0]-1, self.last_move[1]),  # Up
             (self.last_move[0]+1, self.last_move[1]),  # Down
             (self.last_move[0], self.last_move[1]-1),  # Left
             (self.last_move[0], self.last_move[1]+1)   # Right
             ]
-
-            return self.choose_move() #DO THIS SO AS LONG AS ITS IN TARGET MODE
-        
+            for entry in self.neighbors:
+                row1, col1 = entry
+                if (row1>9 or row1<0) or (col1>9 or col1 <0):
+                    self.neighbors.remove(entry)
+            for row, col in self.neighbors:
+                if (0 <= row < len(self.board.grid)) and (0 <= col < len(self.board.grid[0])):
+                    if (row, col) not in self.visited_moves:
+                        self.visited_moves.add((row, col))
+                        self.last_move = (row, col)
+                        print(f"Moved to: {self.last_move} (prioritized after hit)")
+                        return (row, col)
+            
             # pass # if the grid[lastmove]= HIT: prio move
-
+            
         elif(self.phase == 1):
-            row,col = self.last_move
+            if not self.save_move == None:
+                row,col = self.save_move
+                self.save_move = None
+            else:
+                row,col = self.last_move
             
             if (row>=0 and row<9) and (col>=0 and col<9):
                 col += 1
@@ -116,6 +108,7 @@ class AIPlayer:
                 self.iterate-=2
                 row= 0
                 col= self.initial-self.iterate 
+
         elif(self.phase==3):
             random_point = random.choice(self.left_over)
             self.left_over.remove(random_point)#shortens list so that it cannot possibly do same move
@@ -128,16 +121,7 @@ class AIPlayer:
         # print(f"visited moves: {self.visited_moves}")
         return row, col
       
-
-        
-        
-        
-    
-      
-        
-          
-
-
 #when it sinks a ship all the boxes around it become invalid (added to visited moves)
 #in addition must add code that recognizes whole ship, and total number of ships (in board generator)
+#new stuff
 

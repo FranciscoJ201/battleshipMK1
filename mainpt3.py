@@ -20,7 +20,6 @@ def generate_2d_list(rows, cols):
     return grid
 
 board = GameBoard(grid=preset_board)
-board= GameBoard()
 roboPlayer = AIPlayer(board)
 
 
@@ -28,16 +27,18 @@ solution = 0
 while (not board.all_hits_found()):
     board.display()
     row,col = roboPlayer.choose_move()
-    # print(roboPlayer.save_move)
-    # print(roboPlayer.target_mode)
+    
     if(board.grid[row][col]==CellState.SHIP.value):
         board.mark_hit(row,col)
     else:
         board.mark_miss(row,col)
     solution +=1
     print()
+
+    
+board.display()
 print(solution)
-print("new change")
+
    
     
 
