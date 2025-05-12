@@ -15,16 +15,6 @@ class GameBoard:
         pass
     
     def all_hits_found(self):
-        
-      
-        # for row in range(len(self.grid)):
-        #     for col in range(len(self.grid)):
-        #         if(self.grid[row][col] != CellState.HIT.value):
-        #             return False
-                
-        # # if (self.shipsquares==0): 
-        # #     return True
-        # return True
         return self.shipsquares == 0
     
     def display(self):
