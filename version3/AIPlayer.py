@@ -1,6 +1,6 @@
-from Gameboard import GameBoard
-from Cellstate import CellState
-from boards import preset_board
+from version3.Gameboard import GameBoard
+from version3.Cellstate import CellState
+from version3.boards import preset_board
 import random
 
 class AIPlayer:

@@ -1,4 +1,4 @@
-from Cellstate import CellState
+from version3.Cellstate import CellState
 class GameBoard:
     def __init__(self, size=10,grid=None):
         self.size = size

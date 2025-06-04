@@ -1,10 +1,10 @@
-from Gameboard import GameBoard
-from AIPlayer import AIPlayer
+from version3.Gameboard import GameBoard
+from version3.AIPlayer import AIPlayer
 import random
-from boards import preset_board
-from boards import all_hit_board
-from boards import all_miss_board
-from Cellstate import CellState 
+from version3.boards import preset_board
+from version3.boards import all_hit_board
+from version3.boards import all_miss_board
+from version3.Cellstate import CellState 
 
 def generate_2d_list(rows, cols):
     grid = [[0 for _ in range(cols)] for _ in range(rows)]
